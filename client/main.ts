@@ -1,33 +1,4 @@
-import { SERVER_URL } from './deps.ts';
+import { start } from "https://raw.githubusercontent.com/lucacasonato/fresh/ae4603c7313fb50f126d3abb31f900ddf7ac611b/server.ts";
+import routes from "./routes.gen.ts";
 
-const main = () => {
-    const events = new EventSource(`${SERVER_URL}/listen`);
-
-    events.addEventListener('open', () => console.log('open'));
-    events.addEventListener('error', () => {
-        switch (events.readyState) {
-            case EventSource.OPEN:
-                console.log('OPEN');
-                break;
-            case EventSource.CONNECTING:
-                console.log('CONNECTING');
-                break;
-            case EventSource.CLOSED:
-                console.log('CLOSED');
-                break;
-        }
-    });
-
-    events.addEventListener('message', (e) => {
-        console.log(JSON.parse(e.data));
-    });
-
-    // const w0 = performance.now();
-    // await fetch(, {
-    //     method: 'OPTIONS',
-    // });
-    // const w1 = performance.now();
-    // console.log(`${w1 - w0}ms`);
-};
-
-main();
+start(routes);

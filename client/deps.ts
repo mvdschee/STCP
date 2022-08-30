@@ -1,5 +1,1 @@
-import elliptic from 'https://cdn.skypack.dev/elliptic';
-
-const SERVER_URL = Deno.env.get('SERVER_URL') || 'https://stcp.deno.dev';
-
-export { elliptic, SERVER_URL };
+export * from "https://raw.githubusercontent.com/lucacasonato/fresh/ae4603c7313fb50f126d3abb31f900ddf7ac611b/runtime.ts";
