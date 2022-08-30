@@ -4,7 +4,7 @@ async function handleRequest(request: Request): Promise<Response> {
     const { pathname } = new URL(request.url);
 
     if (pathname.startsWith('/main.css')) {
-        const file = await Deno.readTextFile(`./static/main.css`);
+        const file = await Deno.readTextFile(`client/static/main.css`);
 
         return new Response(file, {
             headers: {
@@ -13,7 +13,7 @@ async function handleRequest(request: Request): Promise<Response> {
         });
     }
     if (pathname.startsWith('/main.js')) {
-        const file = await Deno.readTextFile(`./static/main.js`);
+        const file = await Deno.readTextFile(`client/static/main.js`);
         return new Response(file, {
             headers: {
                 'content-type': 'application/javascript',
@@ -21,7 +21,7 @@ async function handleRequest(request: Request): Promise<Response> {
         });
     }
 
-    const file = await Deno.readTextFile(`./src/index.html`);
+    const file = await Deno.readTextFile(`client/src/index.html`);
     return new Response(file, {
         headers: {
             'content-type': 'text/html; charset=utf-8',

@@ -1,11 +1,12 @@
 import * as esbuild from 'https://deno.land/x/esbuild@v0.15.6/mod.js';
 
 const year = new Date().getFullYear();
+// const absPath = `${Deno.cwd()}/client`;
 
 try {
     const t0 = performance.now();
     await esbuild.build({
-        entryPoints: ['src/main.ts'],
+        entryPoints: [`client/src/main.ts`],
         bundle: true,
         minify: true,
         format: 'esm',
@@ -13,7 +14,7 @@ try {
             js: `// Copyright (c) ${year} - Max van der Schee; Licensed MIT`,
             css: `/* Copyright (c) ${year} - Max van der Schee; Licensed MIT */`,
         },
-        outfile: 'static/main.js',
+        outfile: 'client/static/main.js',
     });
     const t1 = performance.now();
 
