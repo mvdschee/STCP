@@ -1,27 +1,2 @@
-function main() {
-    const events = new EventSource('https://stcp.deno.dev/listen');
-
-    console.log('CONNECTING');
-
-    events.addEventListener('open', () => console.log('CONNECTED'));
-
-    events.addEventListener('error', () => {
-        switch (events.readyState) {
-            case EventSource.OPEN:
-                console.log('CONNECTED');
-                break;
-            case EventSource.CONNECTING:
-                console.log('CONNECTING');
-                break;
-            case EventSource.CLOSED:
-                console.log('DISCONNECTED');
-                break;
-        }
-    });
-
-    events.addEventListener('message', (e) => {
-        console.log(JSON.parse(e.data));
-    });
-}
-
-main();
+// Copyright (c) 2022 - Max van der Schee; Licensed MIT
+var n="https://stcp.deno.dev";function t(){let e=new EventSource(`${n}/listen`);console.log("CONNECTING"),e.addEventListener("open",()=>console.log("CONNECTED")),e.addEventListener("error",()=>{switch(e.readyState){case EventSource.OPEN:console.log("CONNECTED");break;case EventSource.CONNECTING:console.log("CONNECTING");break;case EventSource.CLOSED:console.log("DISCONNECTED");break}}),e.addEventListener("message",o=>{console.log(JSON.parse(o.data))}),setInterval(()=>{},3e3)}t();

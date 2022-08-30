@@ -69,7 +69,6 @@ h6 {
     overflow-wrap: break-word;
 }
 
-// will create specificication of 0
 ul:where([class]) {
     list-style: none;
     padding-left: 0;

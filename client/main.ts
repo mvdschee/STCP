@@ -1,10 +1,10 @@
-import { serve } from './deps.ts';
+import { serve } from 'https://deno.land/std@0.153.0/http/server.ts';
 
 async function handleRequest(request: Request): Promise<Response> {
     const { pathname } = new URL(request.url);
 
-    if (pathname.startsWith('/style.css')) {
-        const file = await Deno.readTextFile(`./static/style.css`);
+    if (pathname.startsWith('/main.css')) {
+        const file = await Deno.readTextFile(`./static/main.css`);
 
         return new Response(file, {
             headers: {
@@ -21,22 +21,12 @@ async function handleRequest(request: Request): Promise<Response> {
         });
     }
 
-    return new Response(
-        `<html>
-      <head>
-        <link rel="stylesheet" href="style.css" />
-      </head>
-      <body>
-        <h1>test</h1>
-        <script src="main.js"></script>
-      </body>
-    </html>`,
-        {
-            headers: {
-                'content-type': 'text/html; charset=utf-8',
-            },
-        }
-    );
+    const file = await Deno.readTextFile(`./src/index.html`);
+    return new Response(file, {
+        headers: {
+            'content-type': 'text/html; charset=utf-8',
+        },
+    });
 }
 
 serve(handleRequest);
