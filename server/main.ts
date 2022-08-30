@@ -1,33 +1,38 @@
 import { serve, headersOptions, headerDefault, rateLimit } from './deps.ts';
 import { ConnInfo, Handler } from 'https://deno.land/std@0.153.0/http/server.ts';
 
-const messages: string[] = [];
-const channel = new BroadcastChannel('global');
-
-channel.onmessage = (event: MessageEvent) => {
-    messages.push(event.data);
-};
-
 const handler = (req: Request): Response => {
     const { pathname, searchParams } = new URL(req.url);
 
     if (pathname.startsWith('/send')) {
-        const message = searchParams.get('message');
-        if (!message) {
-            return new Response('?message not provided', { headers: headerDefault, status: 400 });
-        }
+        const msg = searchParams.get('msg');
 
-        messages.push(message);
-        channel.postMessage(message);
+        const channel = new BroadcastChannel('chat');
+
+        channel.postMessage(msg);
+        channel.close();
+
         return new Response('OK', { headers: headerDefault });
     }
 
-    if (pathname.startsWith('/messages')) {
-        return new Response(JSON.stringify(messages), {
-            headers: {
-                ...headersOptions,
-                'content-type': 'application/json',
+    if (pathname.startsWith('/listen')) {
+        const channel = new BroadcastChannel('chat');
+
+        const stream = new ReadableStream({
+            start: (controller) => {
+                controller.enqueue(': Welcome to Deno Deploy Chat!\n\n');
+                channel.onmessage = (e) => {
+                    const body = `data: ${JSON.stringify(e.data)}\n\n`;
+                    controller.enqueue(body);
+                };
             },
+            cancel() {
+                channel.close();
+            },
+        });
+
+        return new Response(stream.pipeThrough(new TextEncoderStream()), {
+            headers: { ...headersOptions, 'content-type': 'text/event-stream' },
         });
     }
 
