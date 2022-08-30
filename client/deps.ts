@@ -1,1 +1,3 @@
-export * from "https://raw.githubusercontent.com/lucacasonato/fresh/ae4603c7313fb50f126d3abb31f900ddf7ac611b/runtime.ts";
+import { serve } from 'https://deno.land/std@0.153.0/http/server.ts';
+
+export { serve };
