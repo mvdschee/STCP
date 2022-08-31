@@ -19,13 +19,7 @@ const handler = (req: Request): Response => {
         const channel = new BroadcastChannel('chat');
 
         const stream = new ReadableStream({
-            start: (controller) => {
-                controller.enqueue(': Welcome to Deno Deploy Chat!\n\n');
-                channel.onmessage = (e) => {
-                    const body = `data: ${JSON.stringify(e.data)}\n\n`;
-                    controller.enqueue(body);
-                };
-            },
+            start: () => {},
             cancel() {
                 channel.close();
             },
