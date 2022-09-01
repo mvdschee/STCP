@@ -1,0 +1,46 @@
+label {
+    font-weight: 500;
+    width: 100%;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    height: 4.2rem;
+    padding: 0.3rem 2rem;
+    border-radius: 2.4rem;
+    font-size: 16px;
+    font-weight: 100;
+    background-color: var(--input-background);
+    border: 1px solid var(--input-border);
+    outline: none;
+}
+
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+    color: var(--color);
+    opacity: 0.5;
+}
+
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-results-button,
+input[type='search']::-webkit-search-results-decoration {
+    display: none;
+}
+
+textarea {
+    height: 10em;
+}
+
+.field {
+    margin-bottom: 2.4rem;
+}
+
+.field-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+}

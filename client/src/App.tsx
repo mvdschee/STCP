@@ -1,37 +1,52 @@
 import { h, Component } from './vendor/preact.js';
-import { Clock } from './components/Clock.tsx';
-import { eventServices, sendMessage } from './services/events.ts';
+import { Input } from './components/Input.tsx';
+import { eventServices } from './services/events.ts';
 
 export class App extends Component {
     state;
 
     constructor() {
         super();
-        this.state = { messages: [] };
+        this.state = { users: new Map() };
     }
 
-    updateMessage = (messages: Map<string, string[]>) => {
-        this.setState({ messages: messages.get('Max') });
+    updateMessages = (data: Map<string, Record<string, string | number>[]>, type: string) => {
+        this.setState({ users: data });
+    };
+
+    timestamp = (time: number) => {
+        const date = new Date(time);
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const formattedTime = `${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+        return formattedTime;
     };
 
     componentDidMount() {
-        eventServices(this.updateMessage);
-
-        setInterval(() => {
-            sendMessage({
-                type: 'msg',
-                message: 'HelloWorlds',
-                name: 'Max',
-            });
-        }, 3000);
+        eventServices({ stateUpdate: this.updateMessages });
     }
 
     render() {
+        const userContent = this.state.users.get('Max');
+
         return (
-            <div>
-                <Clock />
-                <ul>{this.state.messages.length ? this.state.messages.map((message) => <li>{message}</li>) : null}</ul>
-            </div>
+            <main class="main">
+                <h1>Secure Chat</h1>
+
+                <ul class="message-group">
+                    {userContent &&
+                        userContent.map(({ time, message }) => {
+                            return (
+                                <li class="message-item" key={time}>
+                                    <small>{this.timestamp(time)}</small>
+                                    <p>{message}</p>
+                                </li>
+                            );
+                        })}
+                </ul>
+
+                <Input />
+            </main>
         );
     }
 }

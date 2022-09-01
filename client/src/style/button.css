@@ -1,0 +1,36 @@
+.btn {
+    display: inline-block;
+    min-width: 10rem;
+    line-height: 1;
+    font-size: var(--font-s);
+    padding: 1rem 1.6rem;
+    border: 1px solid var(--transparent);
+    border-radius: 3rem;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+    font-weight: 900;
+    transition: background-color 0.16s, color 0.16s, border 0.16s, transform 0.16s;
+}
+
+.btn > svg {
+    width: 1.4em;
+    height: 1.4em;
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.16s;
+}
+
+.btn--primary {
+    background-color: var(--button-primary);
+    color: var(--button-primary-color);
+}
+
+.btn--primary:hover {
+    color: var(--button-primary-color);
+    background-color: var(--transparent);
+    border-color: var(--button-primary-border);
+    text-decoration: none;
+    transform: translate3d(0, 0.2rem, 0);
+}

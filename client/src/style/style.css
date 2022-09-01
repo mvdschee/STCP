@@ -1,1 +1,47 @@
 @import 'reset.css';
+@import 'base.css';
+@import 'typography.css';
+@import 'input.css';
+@import 'button.css';
+
+#app,
+.main {
+    height: 100%;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    padding: 2.4rem;
+}
+
+.message-input {
+    display: flex;
+    gap: 2rem;
+    max-width: 100rem;
+    margin-top: auto;
+}
+
+.message-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+    margin: 2.4rem 0;
+}
+
+.message-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--primary-5);
+    color: var(--color);
+    width: fit-content;
+    gap: 1rem;
+    padding: 0.3rem 1rem;
+    border-radius: 2rem;
+}
+
+.message-item > small {
+    font-size: var(--font-s);
+    font-weight: 500;
+}
