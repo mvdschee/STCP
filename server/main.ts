@@ -19,7 +19,6 @@ const handler = (req: Request): Response => {
         const channel = new BroadcastChannel('chat');
 
         const stream = new ReadableStream({
-            start: () => {},
             cancel() {
                 channel.close();
             },
