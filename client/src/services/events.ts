@@ -3,7 +3,7 @@ const SERVER_URL = 'https://stcp.deno.dev';
 export const messages = new Map();
 export const sessions = new Map();
 
-export function eventServices() {
+export function eventServices(callback: (data: any) => void) {
     // @ts-ignore EventSource not in TypeScript
     const events = new EventSource(`${SERVER_URL}/listen`);
 
@@ -31,8 +31,14 @@ export function eventServices() {
         const [type, name, message] = data.split(':');
 
         if (type === 'msg') {
-            messages.set(name, [...messages.get(name), message]);
+            if (messages.get(name)) {
+                messages.get(name).push(message);
+            } else {
+                messages.set(name, [message]);
+            }
         }
+
+        callback(messages);
     });
 }
 

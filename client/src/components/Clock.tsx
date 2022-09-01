@@ -1,4 +1,4 @@
-import { h, Component } from 'https://unpkg.com/preact@10.10.6?module';
+import { h, Component } from '../vendor/preact.js';
 
 export class Clock extends Component {
     state;

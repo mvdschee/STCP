@@ -21,7 +21,7 @@ async function handleRequest(request: Request): Promise<Response> {
         });
     }
 
-    const file = await Deno.readTextFile(`client/src/index.html`);
+    const file = await Deno.readTextFile(`client/static/index.html`);
     return new Response(file, {
         headers: {
             'content-type': 'text/html; charset=utf-8',
