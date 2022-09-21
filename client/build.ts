@@ -6,7 +6,7 @@ const development = Deno.args.includes('--dev');
 try {
     const t0 = performance.now();
     await esbuild.build({
-        entryPoints: [`client/src/main.tsx`],
+        entryPoints: [`client/src/index.tsx`],
         bundle: true,
         minify: true,
         format: 'esm',

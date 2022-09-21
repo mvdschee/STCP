@@ -31,8 +31,6 @@ export class App extends Component {
 
         return (
             <main class="main">
-                <h1>Secure Chat</h1>
-
                 <ul class="message-group">
                     {userContent &&
                         userContent.map(({ time, message }) => {

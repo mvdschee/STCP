@@ -1,5 +1,9 @@
 {
     "compilerOptions": {
+        "target": "esnext",
+        "lib": ["dom"],
+        "module": "esnext",
+        "types": ["preact"],
         "jsxFactory": "h",
         "jsxFragmentFactory": "Fragment"
     }

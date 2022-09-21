@@ -1,7 +1,7 @@
 const SERVER_URL = 'https://stcp.deno.dev';
 
-const userWithMessages: Map<string, Record<string, string | number>[]> = new Map();
-// const usersOnline: Map<string, string[]> = new Map();
+const userWithMessages: Record<string, Record<string, string | number>[]> = {};
+const usersOnline: Record<string, boolean> = {};
 export let startTime = 0;
 
 export function eventServices({
@@ -9,18 +9,26 @@ export function eventServices({
     stateChange,
     stateSetup,
 }: {
-    stateUpdate: (data: Map<string, Record<string, string | number>[]>, type: 'msg' | 'set') => void;
+    stateUpdate: (data: Record<string, Record<string, string | number>[]>, type: 'msg' | 'set') => void;
     stateChange?: (data: string) => void;
     stateSetup?: (data: string) => void;
 }) {
     // @ts-ignore EventSource not in TypeScript
     const events = new EventSource(`${SERVER_URL}/listen`);
 
+    /**
+     * Start of a new message session connected to the server
+     * Here is where you would send a online state to the server
+     */
     events.addEventListener('open', () => {
         startTime = new Date().valueOf();
         stateSetup ? stateSetup('CONNECTED') : null;
     });
 
+    /**
+     * this part is to keep track of your connection state
+     * after you have connected to the server
+     */
     events.addEventListener('error', () => {
         switch (events.readyState) {
             // @ts-ignore EventSource not in TypeScript
@@ -43,10 +51,10 @@ export function eventServices({
         const [type, name, message] = data.split(':');
 
         if (type === 'msg') {
-            if (userWithMessages.get(name)) {
-                userWithMessages.get(name)!.push({ time: startTime + e.timeStamp, message });
+            if (userWithMessages[name]) {
+                userWithMessages[name].push({ time: startTime + e.timeStamp, message });
             } else {
-                userWithMessages.set(name, [{ time: startTime + e.timeStamp, message }]);
+                userWithMessages[name] = [{ time: startTime + e.timeStamp, message }];
             }
 
             stateUpdate(userWithMessages, 'msg');
